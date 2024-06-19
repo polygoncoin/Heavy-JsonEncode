@@ -82,7 +82,8 @@ PHP JSON Encode large data with lesser resources
     $stmt->closeCursor();
     
     // Start JSON array inside object
-    $jsonEncode->startArray($assocKey);
+    $objectKey = 'subCatgories';
+    $jsonEncode->startArray($objectKey);
     
     // Execute DB Query - 2
     $stmt = $db->select($sql_2);
