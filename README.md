@@ -88,7 +88,7 @@ PHP JSON Encode large data with lesser resources
     // Execute DB Query - 2
     $stmt = $db->select($sql_2);
     $stmt->execute($params_2);
-    for(;$row=$stmt->fetch(PDO::FETCH_ASSOC);) {
+    for(; $row=$stmt->fetch(PDO::FETCH_ASSOC);) {
         $jsonEncode->encode($row);
     }
     // Free statement resources and close the cursor.
