@@ -271,3 +271,46 @@ class JsonEncodeObject
         $this->mode = $mode;
     }
 }
+
+/**
+ * Loading JSON class
+ *
+ * This class is built to handle JSON Object.
+ *
+ * @category   Json Encoder Object handler
+ * @package    Microservices
+ * @author     Ramesh Narayan Jangid
+ * @copyright  Ramesh Narayan Jangid
+ * @version    Release: @1.0.0@
+ * @since      Class available since Release 1.0.0
+ */
+class JsonEncoder
+{
+    /**
+     * JSON generator object
+     */
+    static public $jsonEncodeObj = null;
+
+    /**
+     * Initialize
+     *
+     * @return void
+     */
+    static public function init()
+    {
+        self::$jsonEncodeObj = new JsonEncode();
+    }
+
+    /**
+     * JSON generator object
+     *
+     * @return object
+     */
+    static public function getObject()
+    {
+        if (is_null(self::$jsonEncodeObj)) {
+            self::init();
+        }
+        return self::$jsonEncodeObj;
+    }
+}

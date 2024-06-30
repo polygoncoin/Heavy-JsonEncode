@@ -13,7 +13,7 @@ PHP JSON Encode large data with lesser resources
     require "JsonEncode.php";
     
     // Create JsonEncode Object.
-    $jsonEncodeObj = new JsonEncode();
+    $jsonEncodeObj = JsonEncoder::getObject();
     
     // Execute DB Query
     $stmt = $db->select($sql);
@@ -42,7 +42,7 @@ PHP JSON Encode large data with lesser resources
     require "JsonEncode.php";
     
     // Create JsonEncode Object.
-    $jsonEncodeObj = new JsonEncode();
+    $jsonEncodeObj = JsonEncoder::getObject();
     
     // Execute DB Query
     $stmt = $db->select($sql);
@@ -67,7 +67,7 @@ PHP JSON Encode large data with lesser resources
     require "JsonEncode.php";
     
     // Create JsonEncode Object.
-    $jsonEncodeObj = new JsonEncode();
+    $jsonEncodeObj = JsonEncoder::getObject();
     
     // Start JSON object
     $jsonEncode->startObject();
