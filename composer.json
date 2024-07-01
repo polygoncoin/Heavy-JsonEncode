@@ -1,6 +1,7 @@
 {
     "name": "polygoncoin/jsonencode",
     "description": "PHP JSON Encode large data with lesser resources",
+    "keywords": ["JSON", "json_encode", "Encode", "Custom", "Less", "Heavy", "Huge", "Memory", "Limit"],
     "type": "library",
     "license": "MIT",
     "authors": [
