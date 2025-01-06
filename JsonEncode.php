@@ -20,21 +20,21 @@ class JsonEncode
     /**
      * Temporary Stream
      *
-     * @var string
+     * @var null|resource
      */
-    private $tempStream = '';
+    private $tempStream = null;
 
     /**
      * Array of JsonEncodeObject objects
      *
-     * @var array
+     * @var JsonEncodeObject[]
      */
     private $objects = [];
 
     /**
      * Current JsonEncodeObject object
      *
-     * @var object
+     * @var null|JsonEncodeObject
      */
     private $currentObject = null;
 
@@ -50,6 +50,7 @@ class JsonEncode
     /**
      * Write to temporary stream
      * 
+     * @param string $str
      * @return void
      */
     public function write($str)
@@ -128,7 +129,7 @@ class JsonEncode
     /**
      * Start simple array
      *
-     * @param string $key Used while creating simple array inside an associative array and $key is the key.
+     * @param null|string $key Used while creating simple array inside an associative array and $key is the key.
      * @return void
      */
     public function startArray($key = null)
@@ -162,7 +163,7 @@ class JsonEncode
     /**
      * Start simple array
      *
-     * @param string $key Used while creating associative array inside an associative array and $key is the key.
+     * @param null|string $key Used while creating associative array inside an associative array and $key is the key.
      * @return void
      */
     public function startObject($key = null)
@@ -258,7 +259,10 @@ class JsonEncode
  */
 class JsonEncodeObject
 {
+    /** @var string $mode */ 
     public $mode = '';
+
+    /** @var string $comma */ 
     public $comma = '';
 
     /**
@@ -288,6 +292,8 @@ class JsonEncoder
 {
     /**
      * JSON generator object
+     * 
+     * @var null|JsonEncode
      */
     static public $jsonEncodeObj = null;
 
