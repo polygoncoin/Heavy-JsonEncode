@@ -1,13 +1,13 @@
 # JSON Encode
- 
+
 PHP JSON Encode large data with lesser resources
- 
+
 
 ## Examples
- 
+
 
 ### Generating single row output as object.
- 
+
 ```PHP
 <?php
 require "JsonEncode.php";
@@ -37,7 +37,7 @@ $jsonEncode = null;
 ```
 
 ### Generating many rows output as array of objects.
- 
+
 ```PHP
 <?php
 require "JsonEncode.php";
@@ -63,7 +63,7 @@ $jsonEncode = null;
 ```
 
 ### Generating single row output inside object.
- 
+
 ```PHP
 <?php
 require "JsonEncode.php";
@@ -99,7 +99,7 @@ $jsonEncode = null;
 ```
 
 ### Generating many rows output inside object.
- 
+
 ```PHP
 <?php
 require "JsonEncode.php";

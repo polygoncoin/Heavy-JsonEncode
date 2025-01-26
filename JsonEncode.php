@@ -49,7 +49,7 @@ class JsonEncode
 
     /**
      * Write to temporary stream
-     * 
+     *
      * @param string $str
      * @return void
      */
@@ -76,7 +76,7 @@ class JsonEncode
     /**
      * Encodes both simple and associative array to json
      *
-     * @param $arr string value escaped and array value json_encode function is applied.  
+     * @param $arr string value escaped and array value json_encode function is applied.
      * @return void
      */
     public function encode($arr)
@@ -236,11 +236,11 @@ class JsonEncode
         $this->streamJson();
     }
 
-    /** 
-     * destruct functipn 
-     */ 
-    public function __destruct() 
-    { 
+    /**
+     * destruct functipn
+     */
+    public function __destruct()
+    {
         $this->end();
     }
 }
@@ -259,10 +259,10 @@ class JsonEncode
  */
 class JsonEncodeObject
 {
-    /** @var string $mode */ 
+    /** @var string $mode */
     public $mode = '';
 
-    /** @var string $comma */ 
+    /** @var string $comma */
     public $comma = '';
 
     /**
@@ -292,7 +292,7 @@ class JsonEncoder
 {
     /**
      * JSON generator object
-     * 
+     *
      * @var null|JsonEncode
      */
     static public $jsonEncodeObj = null;
