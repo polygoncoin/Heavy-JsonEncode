@@ -25,6 +25,20 @@ class JsonEncode
     private $tempStream = null;
 
     /**
+     * Characters that are escaped while creating JSON
+     *
+     * @var string[]
+     */
+    private $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c", ' ');
+
+    /**
+     * Characters that are escaped with for $escapers while creating JSON
+     *
+     * @var string[]
+     */
+    private $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b", ' ');
+
+    /**
      * Array of JsonEncodeObject objects
      *
      * @var JsonEncodeObject[]
@@ -67,9 +81,8 @@ class JsonEncode
     private function escape($str)
     {
         if (is_null($str)) return 'null';
-        $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
-        $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
-        $str = str_replace($escapers, $replacements, $str);
+
+        $str = str_replace($this->escapers, $this->replacements, $str);
         return '"' . $str . '"';
     }
 
