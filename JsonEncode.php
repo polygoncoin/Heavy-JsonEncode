@@ -108,6 +108,23 @@ class JsonEncode
     }
 
     /**
+     * Append raw json string
+     *
+     * @param $json
+     * @return void
+     */
+    public function appendJson(&$json)
+    {
+        if ($this->currentObject) {
+            $this->write($this->currentObject->comma);
+        }
+        $this->write($json);
+        if ($this->currentObject) {
+            $this->currentObject->comma = ',';
+        }
+    }
+
+    /**
      * Add simple array/value as in the json format.
      *
      * @param $value data type is string/array. This is used to add value/array in the current Array.
@@ -217,16 +234,21 @@ class JsonEncode
      */
     private function streamJson()
     {
-        if (empty(ob_get_contents())) {
-            // end the json
+        if ($this->tempStream) {
+            $this->end();
+
+            //Clean (erase) the contents of the active output buffer and turn it off
+            ob_end_clean();
+
             // rewind the temp stream.
             rewind($this->tempStream);
+
             // stream the temp to output
             $outputStream = fopen("php://output", "w+b");
             stream_copy_to_stream($this->tempStream, $outputStream);
             fclose($outputStream);
+            fclose($this->tempStream);
         }
-        fclose($this->tempStream);
     }
 
     /**
@@ -246,7 +268,6 @@ class JsonEncode
                     break;
             }
         }
-        $this->streamJson();
     }
 
     /**
@@ -254,7 +275,7 @@ class JsonEncode
      */
     public function __destruct()
     {
-        $this->end();
+        $this->streamJson();
     }
 }
 
