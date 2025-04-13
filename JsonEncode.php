@@ -89,20 +89,31 @@ class JsonEncode
     /**
      * Encodes both simple and associative array to json
      *
-     * @param $arr string value escaped and array value json_encode function is applied.
+     * @param mixed $arr string value escaped and array value json_encode function is applied.
      * @return void
      */
     public function encode($arr)
     {
+        $encode = '';
+        if (is_array($arr)) {
+            $encode = json_encode($arr);
+        } else {
+            $encode = $this->escape($arr);
+        }
+        return $encode;
+    }
+
+    /**
+     * Append raw json string
+     *
+     * @param string $json JSON
+     * @return void
+     */
+    public function appendJson(&$json)
+    {
         if ($this->currentObject) {
             $this->write($this->currentObject->comma);
-        }
-        if (is_array($arr)) {
-            $this->write(json_encode($arr));
-        } else {
-            $this->write($this->escape($arr));
-        }
-        if ($this->currentObject) {
+            $this->write($json);
             $this->currentObject->comma = ',';
         }
     }
@@ -110,16 +121,15 @@ class JsonEncode
     /**
      * Append raw json string
      *
-     * @param $json
+     * @param string $key  key of associative array
+     * @param string $json JSON
      * @return void
      */
-    public function appendJson(&$json)
+    public function appendKeyJson($key, &$json)
     {
-        if ($this->currentObject) {
+        if ($this->currentObject && $this->currentObject->mode === 'Object') {
             $this->write($this->currentObject->comma);
-        }
-        $this->write($json);
-        if ($this->currentObject) {
+            $this->write($this->escape($key) . ':' . $json);
             $this->currentObject->comma = ',';
         }
     }
@@ -135,7 +145,13 @@ class JsonEncode
         if ($this->currentObject->mode !== 'Array') {
             throw new Exception('Mode should be Array');
         }
-        $this->encode($value);
+        if ($this->currentObject) {
+            $this->write($this->currentObject->comma);
+        }
+        $this->write($this->encode($value));
+        if ($this->currentObject) {
+            $this->currentObject->comma = ',';
+        }
     }
 
     /**
@@ -150,10 +166,13 @@ class JsonEncode
         if ($this->currentObject->mode !== 'Object') {
             throw new Exception('Mode should be Object');
         }
-        $this->write($this->currentObject->comma);
-        $this->write($this->escape($key) . ':');
-        $this->currentObject->comma = '';
-        $this->encode($value);
+        if ($this->currentObject) {
+            $this->write($this->currentObject->comma);
+        }
+        $this->write($this->escape($key) . ':' . $this->encode($value));
+        if ($this->currentObject) {
+            $this->currentObject->comma = ',';
+        }
     }
 
     /**
