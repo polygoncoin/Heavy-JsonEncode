@@ -140,4 +140,38 @@ $jsonEncode->endObject();
 
 $jsonEncode = null;
 ```
+
+### Appending raw JSON.
+
+```PHP
+<?php
+require "JsonEncode.php";
+
+// Create JsonEncode Object.
+$jsonEncodeObj = JsonEncoder::getObject();
+
+// Start JSON object
+$jsonEncode->startObject();
+
+// Execute DB Query - 1
+$stmt = $db->select($sql);
+$stmt->execute($params);
+foreach($stmt->fetch(PDO::FETCH_ASSOC) as $key => $value) {
+    $jsonEncode->addKeyValue($key, $value);
+}
+// Free statement resources and close the cursor.
+$stmt->closeCursor();
+
+// Append Json
+$jsonEncode->appendJson('{"NewKey1": {"Key11": "Value11", "Key12": "Value12"}}');
+
+// Append Json for a dynamic Key
+$jsonEncode->appendKeyJson("NewKey2", '{"Key21": "Value21", "Key22": "Value22"}');
+
+// End JSON object
+$jsonEncode->endObject();
+
+$jsonEncode = null;
+```
+
 > The $jsonEncode = null; will stream the generated JSON.
