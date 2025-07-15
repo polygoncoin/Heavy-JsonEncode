@@ -81,7 +81,7 @@ class JsonEncode
      * Write data to temporary stream
      *
      * @param string $data String Data
-     * 
+     *
      * @return void
      */
     public function write($data): void
@@ -93,18 +93,18 @@ class JsonEncode
      * Escape the json string key or value
      *
      * @param string $str json key or value string.
-     * 
+     *
      * @return string
      */
     private function _escape($str): string
     {
         if (is_null(value: $str)) {
             return 'null';
-        } 
+        }
 
         $str = str_replace(
-            search: $this->_escapers, 
-            replace: $this->_replacements, 
+            search: $this->_escapers,
+            replace: $this->_replacements,
             subject: $str
         );
 
@@ -241,7 +241,7 @@ class JsonEncode
      * Start simple array
      *
      * @param null|string $key Used for creating object inside an object
-     * 
+     *
      * @return void
      */
     public function startObject($key = null)

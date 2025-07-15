@@ -27,9 +27,9 @@ namespace CustomJsonEncode;
  */
 class JsonEncodeObject
 {
-    /** 
+    /**
      * Mode value can be any one among Array/Object string value
-     * 
+     *
      * @var string $mode
      */
     public $mode = '';
