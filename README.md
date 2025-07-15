@@ -10,7 +10,9 @@ PHP JSON Encode large data with lesser resources
 
 ```PHP
 <?php
-require "JsonEncode.php";
+require_once __DIR__ . '/Autoload.php';
+
+use CustomJsonEncode\JsonEncoder;
 
 // Create JsonEncode Object.
 $jsonEncodeObj = JsonEncoder::getObject();
@@ -40,7 +42,9 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require "JsonEncode.php";
+require_once __DIR__ . '/Autoload.php';
+
+use CustomJsonEncode\JsonEncoder;
 
 // Create JsonEncode Object.
 $jsonEncodeObj = JsonEncoder::getObject();
@@ -66,7 +70,9 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require "JsonEncode.php";
+require_once __DIR__ . '/Autoload.php';
+
+use CustomJsonEncode\JsonEncoder;
 
 // Create JsonEncode Object.
 $jsonEncodeObj = JsonEncoder::getObject();
@@ -102,7 +108,9 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require "JsonEncode.php";
+require_once __DIR__ . '/Autoload.php';
+
+use CustomJsonEncode\JsonEncoder;
 
 // Create JsonEncode Object.
 $jsonEncodeObj = JsonEncoder::getObject();
@@ -145,7 +153,9 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require "JsonEncode.php";
+require_once __DIR__ . '/Autoload.php';
+
+use CustomJsonEncode\JsonEncoder;
 
 // Create JsonEncode Object.
 $jsonEncodeObj = JsonEncoder::getObject();
