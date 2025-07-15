@@ -163,11 +163,12 @@ class JsonEncode
      * @param mixed $value Add value/array in the current Array
      *
      * @return void
+     * @throws \Exception
      */
     public function addValue($value): void
     {
         if ($this->_currentObject->mode !== 'Array') {
-            throw new Exception('Mode should be Array');
+            throw new \Exception('Mode should be Array');
         }
         if ($this->_currentObject) {
             $this->write(data: $this->_currentObject->comma);
@@ -185,11 +186,12 @@ class JsonEncode
      * @param mixed  $value Add value/array in the current Object
      *
      * @return void
+     * @throws \Exception
      */
     public function addKeyValue($key, $value): void
     {
         if ($this->_currentObject->mode !== 'Object') {
-            throw new Exception('Mode should be Object');
+            throw new \Exception('Mode should be Object');
         }
         if ($this->_currentObject) {
             $this->write(data: $this->_currentObject->comma);
@@ -243,6 +245,7 @@ class JsonEncode
      * @param null|string $key Used for creating object inside an object
      *
      * @return void
+     * @throws \Exception
      */
     public function startObject($key = null)
     {
