@@ -2,15 +2,14 @@
 
 PHP JSON Encode large data with lesser resources
 
-
 ## Examples
-
 
 ### Generating single row output as object.
 
 ```PHP
 <?php
-require_once __DIR__ . '/Autoload.php';
+
+require_once __DIR__ . '/AutoloadJsonEncode.php';
 
 use CustomJsonEncode\JsonEncoder;
 
@@ -42,7 +41,8 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require_once __DIR__ . '/Autoload.php';
+
+require_once __DIR__ . '/AutoloadJsonEncode.php';
 
 use CustomJsonEncode\JsonEncoder;
 
@@ -70,7 +70,8 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require_once __DIR__ . '/Autoload.php';
+
+require_once __DIR__ . '/AutoloadJsonEncode.php';
 
 use CustomJsonEncode\JsonEncoder;
 
@@ -108,7 +109,8 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require_once __DIR__ . '/Autoload.php';
+
+require_once __DIR__ . '/AutoloadJsonEncode.php';
 
 use CustomJsonEncode\JsonEncoder;
 
@@ -153,7 +155,8 @@ $jsonEncode = null;
 
 ```PHP
 <?php
-require_once __DIR__ . '/Autoload.php';
+
+require_once __DIR__ . '/AutoloadJsonEncode.php';
 
 use CustomJsonEncode\JsonEncoder;
 

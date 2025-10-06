@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom Json Encode
  * php version 7
@@ -11,6 +12,7 @@
  * @link      https://github.com/polygoncoin/Microservices
  * @since     Class available since Release 1.0.0
  */
+
 namespace CustomJsonEncode;
 
 use CustomJsonEncode\JsonEncodeObject;
@@ -34,23 +36,23 @@ class JsonEncode
      *
      * @var null|resource
      */
-    private $_tempStream = null;
+    private $tempStream = null;
 
     /**
      * Characters that are escaped while creating JSON
      *
      * @var string[]
      */
-    private $_escapers = array(
+    private $escapers = array(
         "\\", "\"", "\n", "\r", "\t", "\x08", "\x0c", ' '
     );
 
     /**
-     * Characters that are escaped with for $_escapers while creating JSON
+     * Characters that are escaped with for $escapers while creating JSON
      *
      * @var string[]
      */
-    private $_replacements = array(
+    private $replacements = array(
         "\\\\", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b", ' '
     );
 
@@ -59,14 +61,14 @@ class JsonEncode
      *
      * @var JsonEncodeObject[]
      */
-    private $_objects = [];
+    private $objects = [];
 
     /**
      * Current JsonEncodeObject object
      *
      * @var null|JsonEncodeObject
      */
-    private $_currentObject = null;
+    private $currentObject = null;
 
     /**
      * JsonEncode constructor
@@ -74,7 +76,7 @@ class JsonEncode
     public function __construct()
     {
         ob_start();
-        $this->_tempStream = fopen(filename: "php://temp", mode: "w+b");
+        $this->tempStream = fopen(filename: "php://temp", mode: "w+b");
     }
 
     /**
@@ -86,7 +88,7 @@ class JsonEncode
      */
     public function write($data): void
     {
-        fwrite(stream: $this->_tempStream, data: $data);
+        fwrite(stream: $this->tempStream, data: $data);
     }
 
     /**
@@ -96,15 +98,15 @@ class JsonEncode
      *
      * @return string
      */
-    private function _escape($str): string
+    private function escape($str): string
     {
         if (is_null(value: $str)) {
             return 'null';
         }
 
         $str = str_replace(
-            search: $this->_escapers,
-            replace: $this->_replacements,
+            search: $this->escapers,
+            replace: $this->replacements,
             subject: $str
         );
 
@@ -121,7 +123,7 @@ class JsonEncode
     public function encode($data): bool|string
     {
         return (is_array(value: $data)) ?
-            json_encode(value: $data) : $this->_escape(str: $data);
+            json_encode(value: $data) : $this->escape(str: $data);
     }
 
     /**
@@ -133,10 +135,10 @@ class JsonEncode
      */
     public function appendJson(&$json): void
     {
-        if ($this->_currentObject) {
-            $this->write(data: $this->_currentObject->comma);
+        if ($this->currentObject) {
+            $this->write(data: $this->currentObject->comma);
             $this->write(data: $json);
-            $this->_currentObject->comma = ',';
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -150,10 +152,10 @@ class JsonEncode
      */
     public function appendKeyJson($key, &$json): void
     {
-        if ($this->_currentObject && $this->_currentObject->mode === 'Object') {
-            $this->write(data: $this->_currentObject->comma);
-            $this->write(data: $this->_escape(str: $key) . ':' . $json);
-            $this->_currentObject->comma = ',';
+        if ($this->currentObject && $this->currentObject->mode === 'Object') {
+            $this->write(data: $this->currentObject->comma);
+            $this->write(data: $this->escape(str: $key) . ':' . $json);
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -167,15 +169,15 @@ class JsonEncode
      */
     public function addValue($value): void
     {
-        if ($this->_currentObject->mode !== 'Array') {
+        if ($this->currentObject->mode !== 'Array') {
             throw new \Exception('Mode should be Array');
         }
-        if ($this->_currentObject) {
-            $this->write(data: $this->_currentObject->comma);
+        if ($this->currentObject) {
+            $this->write(data: $this->currentObject->comma);
         }
         $this->write(data: $this->encode(data: $value));
-        if ($this->_currentObject) {
-            $this->_currentObject->comma = ',';
+        if ($this->currentObject) {
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -190,17 +192,17 @@ class JsonEncode
      */
     public function addKeyValue($key, $value): void
     {
-        if ($this->_currentObject->mode !== 'Object') {
+        if ($this->currentObject->mode !== 'Object') {
             throw new \Exception('Mode should be Object');
         }
-        if ($this->_currentObject) {
-            $this->write(data: $this->_currentObject->comma);
+        if ($this->currentObject) {
+            $this->write(data: $this->currentObject->comma);
         }
         $this->write(
-            data: $this->_escape(str: $key) . ':' . $this->encode(data: $value)
+            data: $this->escape(str: $key) . ':' . $this->encode(data: $value)
         );
-        if ($this->_currentObject) {
-            $this->_currentObject->comma = ',';
+        if ($this->currentObject) {
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -213,13 +215,13 @@ class JsonEncode
      */
     public function startArray($key = null): void
     {
-        if ($this->_currentObject) {
-            $this->write(data: $this->_currentObject->comma);
-            array_push($this->_objects, $this->_currentObject);
+        if ($this->currentObject) {
+            $this->write(data: $this->currentObject->comma);
+            array_push($this->objects, $this->currentObject);
         }
-        $this->_currentObject = new JsonEncodeObject(mode: 'Array');
+        $this->currentObject = new JsonEncodeObject(mode: 'Array');
         if (!is_null(value: $key)) {
-            $this->write(data: $this->_escape(str: $key) . ':');
+            $this->write(data: $this->escape(str: $key) . ':');
         }
         $this->write(data: '[');
     }
@@ -232,10 +234,10 @@ class JsonEncode
     public function endArray(): void
     {
         $this->write(data: ']');
-        $this->_currentObject = null;
-        if (count(value: $this->_objects)>0) {
-            $this->_currentObject = array_pop($this->_objects);
-            $this->_currentObject->comma = ',';
+        $this->currentObject = null;
+        if (count(value: $this->objects) > 0) {
+            $this->currentObject = array_pop($this->objects);
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -249,18 +251,18 @@ class JsonEncode
      */
     public function startObject($key = null)
     {
-        if ($this->_currentObject) {
-            if ($this->_currentObject->mode === 'Object' && is_null(value: $key)) {
+        if ($this->currentObject) {
+            if ($this->currentObject->mode === 'Object' && is_null(value: $key)) {
                 throw new \Exception(
                     message: 'Object inside an Object should be supported with a Key'
                 );
             }
-            $this->write(data: $this->_currentObject->comma);
-            array_push($this->_objects, $this->_currentObject);
+            $this->write(data: $this->currentObject->comma);
+            array_push($this->objects, $this->currentObject);
         }
-        $this->_currentObject = new JsonEncodeObject(mode: 'Object');
+        $this->currentObject = new JsonEncodeObject(mode: 'Object');
         if (!is_null(value: $key)) {
-            $this->write(data: $this->_escape(str: $key) . ':');
+            $this->write(data: $this->escape(str: $key) . ':');
         }
         $this->write(data: '{');
     }
@@ -273,10 +275,10 @@ class JsonEncode
     public function endObject(): void
     {
         $this->write(data: '}');
-        $this->_currentObject = null;
-        if (count(value: $this->_objects)>0) {
-            $this->_currentObject = array_pop($this->_objects);
-            $this->_currentObject->comma = ',';
+        $this->currentObject = null;
+        if (count(value: $this->objects) > 0) {
+            $this->currentObject = array_pop($this->objects);
+            $this->currentObject->comma = ',';
         }
     }
 
@@ -285,22 +287,22 @@ class JsonEncode
      *
      * @return void
      */
-    private function _streamJson(): void
+    private function streamJson(): void
     {
-        if ($this->_tempStream) {
+        if ($this->tempStream) {
             $this->end();
 
             //Clean (erase) the contents of the active output buffer and turn it off
             ob_end_clean();
 
             // rewind the temp stream.
-            rewind(stream: $this->_tempStream);
+            rewind(stream: $this->tempStream);
 
             // stream the temp to output
             $outputStream = fopen(filename: "php://output", mode: "w+b");
-            stream_copy_to_stream(from: $this->_tempStream, to: $outputStream);
+            stream_copy_to_stream(from: $this->tempStream, to: $outputStream);
             fclose(stream: $outputStream);
-            fclose(stream: $this->_tempStream);
+            fclose(stream: $this->tempStream);
         }
     }
 
@@ -311,14 +313,14 @@ class JsonEncode
      */
     public function end(): void
     {
-        while ($this->_currentObject && $this->_currentObject->mode) {
-            switch ($this->_currentObject->mode) {
-            case 'Array':
-                $this->endArray();
-                break;
-            case 'Object':
-                $this->endObject();
-                break;
+        while ($this->currentObject && $this->currentObject->mode) {
+            switch ($this->currentObject->mode) {
+                case 'Array':
+                    $this->endArray();
+                    break;
+                case 'Object':
+                    $this->endObject();
+                    break;
             }
         }
     }
@@ -328,6 +330,6 @@ class JsonEncode
      */
     public function __destruct()
     {
-        $this->_streamJson();
+        $this->streamJson();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom Json Encode
  * php version 7
@@ -11,6 +12,7 @@
  * @link      https://github.com/polygoncoin/Microservices
  * @since     Class available since Release 1.0.0
  */
+
 namespace CustomJsonEncode;
 
 /**

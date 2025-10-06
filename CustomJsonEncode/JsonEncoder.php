@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Custom Json Encode
  * php version 7
@@ -11,6 +12,7 @@
  * @link      https://github.com/polygoncoin/Microservices
  * @since     Class available since Release 1.0.0
  */
+
 namespace CustomJsonEncode;
 
 use CustomJsonEncode\JsonEncode;
@@ -34,14 +36,14 @@ class JsonEncoder
      *
      * @var null|JsonEncode
      */
-    static public $jsonEncodeObj = null;
+    public static $jsonEncodeObj = null;
 
     /**
      * Initialize
      *
      * @return void
      */
-    static public function init(): void
+    public static function init(): void
     {
         self::$jsonEncodeObj = new JsonEncode();
     }
@@ -51,7 +53,7 @@ class JsonEncoder
      *
      * @return object
      */
-    static public function getObject(): JsonEncode
+    public static function getObject(): JsonEncode
     {
         if (is_null(value: self::$jsonEncodeObj)) {
             self::init();
