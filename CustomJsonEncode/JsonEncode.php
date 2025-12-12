@@ -71,7 +71,7 @@ class JsonEncode
     private $currentObject = null;
 
     /**
-     * JsonEncode constructor
+     * Constructor
      */
     public function __construct()
     {
